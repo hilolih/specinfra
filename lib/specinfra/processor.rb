@@ -238,10 +238,22 @@ module Specinfra
       cmd = Specinfra.command.get(:get_runmqsc_status, str)
       ret = Specinfra.backend.run_command(cmd)
       return false if ret.failure?
-      binding.pry
-      
       ret.stdout.gsub!(/\r\n/, "\n")
-      ret.instance_variable_set(:@stdout, runmqsc_result)
+      result = runmqsc_result(ret.stdout)
+      return false if result.empty?
+      return false if result.size > 1
+      ret.instance_variable_set(:@stdout, result.first["STATUS"].downcase)
+      ret
+    end
+
+    def self.get_runmqsc_counts(str)
+      cmd = Specinfra.command.get(:get_runmqsc_counts, str)
+      ret = Specinfra.backend.run_command(cmd)
+      return false if ret.failure?
+      ret.stdout.gsub!(/\r\n/, "\n")
+      result = runmqsc_result(ret.stdout)
+      return false if result.empty?
+      ret.instance_variable_set(:@stdout, result.size)
       ret
     end
   end

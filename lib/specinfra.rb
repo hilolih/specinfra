@@ -7,6 +7,7 @@ require 'specinfra/command_result'
 require 'specinfra/configuration'
 require 'specinfra/runner'
 require 'specinfra/processor'
+require 'specinfra/process'
 
 include Specinfra
 

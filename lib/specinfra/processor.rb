@@ -1,3 +1,7 @@
+require 'specinfra/process'
+require 'specinfra/process/module'
+require 'specinfra/process/module/runmqsc'
+
 module Specinfra
   class Processor
     def self.check_service_is_running(service)
@@ -224,6 +228,21 @@ module Specinfra
           $3
         end
       end
+    end
+    
+    # for runmqsc
+    
+    extend Specinfra::Process::Module::Runmqsc
+
+    def self.get_runmqsc_status(str)
+      cmd = Specinfra.command.get(:get_runmqsc_status, str)
+      ret = Specinfra.backend.run_command(cmd)
+      return false if ret.failure?
+      binding.pry
+      
+      ret.stdout.gsub!(/\r\n/, "\n")
+      ret.instance_variable_set(:@stdout, runmqsc_result)
+      ret
     end
   end
 end

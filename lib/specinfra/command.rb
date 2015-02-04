@@ -34,6 +34,8 @@ require 'specinfra/command/base/service'
 require 'specinfra/command/base/user'
 require 'specinfra/command/base/yumrepo'
 require 'specinfra/command/base/zfs'
+#
+require 'specinfra/command/base/runmqsc'
 
 # Linux (inhefit Base)
 require 'specinfra/command/linux'

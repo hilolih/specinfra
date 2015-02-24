@@ -13,11 +13,12 @@ module Specinfra::Process::Module::Runmqsc
         # skip header
         next
       elsif header and line =~ /AMQ/
-        # into body
+        # into body at the first time.
         header = false
         body_reset
         parse_element line
       elsif not header and line =~ /AMQ/
+        # into next body
         bodies << @body
         body_reset
         parse_element line
@@ -26,13 +27,14 @@ module Specinfra::Process::Module::Runmqsc
       end
     end
     unless @body.empty?
+      # the last line
       bodies << @body
     end
     bodies
   end
 
   def parse_element line
-    regex  = /(.*)\((.*)\)/
+    regex  = /([^(]*)\((.*)\)/
     line.strip.split(/\s+/).each do |el|
       match = el.match(regex)
       unless match.nil?

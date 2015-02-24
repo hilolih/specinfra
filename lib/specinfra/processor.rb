@@ -235,15 +235,11 @@ module Specinfra
     extend Specinfra::Process::Module::Runmqsc
 
     def self.get_runmqsc_status(str)
-      cmd = Specinfra.command.get(:get_runmqsc_status, str)
-      ret = Specinfra.backend.run_command(cmd)
-      return false if ret.failure?
-      ret.stdout.gsub!(/\r\n/, "\n")
-      result = runmqsc_result(ret.stdout)
-      return false if result.empty?
-      return false if result.size > 1
-      ret.instance_variable_set(:@stdout, result.first["STATUS"].downcase)
-      ret
+      get_runmqsc_something(str, "status")
+    end
+
+    def self.get_runmqsc_conname(str)
+      get_runmqsc_something(str, "conname")
     end
 
     def self.get_runmqsc_counts(str)
@@ -254,6 +250,19 @@ module Specinfra
       result = runmqsc_result(ret.stdout)
       return false if result.empty?
       ret.instance_variable_set(:@stdout, result.size)
+      ret
+    end
+
+    private
+    def self.get_runmqsc_something(str, keyword)
+      cmd = Specinfra.command.get("get_runmqsc_#{keyword.downcase}".to_sym, str)
+      ret = Specinfra.backend.run_command(cmd)
+      return false if ret.failure?
+      ret.stdout.gsub!(/\r\n/, "\n")
+      result = runmqsc_result(ret.stdout)
+      return false if result.empty?
+      return false if result.size > 1
+      ret.instance_variable_set(:@stdout, result.first["#{keyword.upcase}"].downcase)
       ret
     end
   end

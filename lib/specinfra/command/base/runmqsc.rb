@@ -7,6 +7,7 @@ class Specinfra::Command::Base::Runmqsc < Specinfra::Command::Base
     
     alias :get_counts :runmqsc_cmd
     alias :get_status :runmqsc_cmd
+    alias :get_conname :runmqsc_cmd
   end
 end
 

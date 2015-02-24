@@ -17,14 +17,6 @@ AMQ8417: チャネル状況の内容を表示します。
    CONNAME(10.40.1.13)                     CURRENT
    RQMNAME(QM_SZMST02)                     STATUS(RUNNING)
    SUBSTATE(RECEIVE)
-MQSC コマンドを 1 つ読み取りました。
-構文エラーがあるコマンドはありません。
-有効な MQSC コマンドはすべて処理されました。
-5724-H72 (C) Copyright IBM Corp. 1994, 2011.  ALL RIGHTS RESERVED.
-キュー・マネージャー QM_GZ02 に対して MQSC を始動中です。
-
-
-     1 : dis chstatus(*) WHERE (CHLTYPE EQ CLUSSDR)
 AMQ8417: チャネル状況の内容を表示します。
    CHANNEL(CH_CL_GK_SZMST02)               CHLTYPE(CLUSSDR)
    CONNAME(10.40.1.22(1415))               CURRENT
@@ -45,6 +37,7 @@ EOF
       re = Test.runmqsc_result(@result)
       expect(re.size).to eq 4
       expect(re.first["CHANNEL"]).to eq "CH_CL_GK_GZ02"
+      expect(re.first["CONNAME"]).to eq "10.40.1.12"
       expect(re.last["CHANNEL"]).to eq "CH_CL_GK_SZMST01"
       expect(re.last["CONNAME"]).to eq "10.40.1.21(1414)"
     end

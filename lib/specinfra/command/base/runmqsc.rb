@@ -5,9 +5,12 @@ class Specinfra::Command::Base::Runmqsc < Specinfra::Command::Base
       cmd += "echo dis \" #{str} ALL\" | #{property['bin']}/runmqsc #{property['qmgr']}"
     end
     
-    alias :get_counts :runmqsc_cmd
-    alias :get_status :runmqsc_cmd
+    alias :get_counts  :runmqsc_cmd
+    alias :get_status  :runmqsc_cmd
     alias :get_conname :runmqsc_cmd
+    alias :get_channel :runmqsc_cmd
+    alias :get_qmid    :runmqsc_cmd
+    alias :get_put     :runmqsc_cmd
   end
 end
 

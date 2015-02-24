@@ -242,6 +242,18 @@ module Specinfra
       get_runmqsc_something(str, "conname")
     end
 
+    def self.get_runmqsc_channel(str)
+      get_runmqsc_something(str, "channel")
+    end
+
+    def self.get_runmqsc_qmid(str)
+      get_runmqsc_something(str, "qmid")
+    end
+
+    def self.get_runmqsc_put(str)
+      get_runmqsc_something(str, "put")
+    end
+
     def self.get_runmqsc_counts(str)
       cmd = Specinfra.command.get(:get_runmqsc_counts, str)
       ret = Specinfra.backend.run_command(cmd)
